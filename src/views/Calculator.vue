@@ -111,19 +111,25 @@
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: #D9D3C7;
-  border: 2px solid #D9D3C7;
+  background-color: #222831;
+  border: 2px solid  #222831;
+  top: 50%;
+  left: 50%;
+  translate: 0% 40%;
+  border-radius: 5px;
+
 }
 
 .display{
   flex: 1;
-  background-color: #A5B3A6;
+  background-color: #EEEEEE;
   margin: 10px;
   font-size: 40px;
   text-align: right;
   overflow-wrap: break-word;
   padding: 5px;
   font-family: "digital";
+  border-radius: 5px;
 }
 
 .keypad{
@@ -142,18 +148,21 @@
   cursor: pointer;
 }
 .num{
-  background-color: #525759;
-  color: #ffffff;
+  background-color: #393E46;
+  color: #EEEEEE;
+  border-radius: 3px;
 }
 .fn{
-  background-color: #877569;
+  background-color: #B4B4B8;
   color: #000000;
+  border-radius: 3px;
 }
 .special{
-  background-color: #BD5A04;
+  background-color: #FFD369;
   color: #000000;
   font-size: 35px;
   font-weight: bold;
+  border-radius: 3px;
 }
 ::selection{
   background: none;

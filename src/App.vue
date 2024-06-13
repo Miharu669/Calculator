@@ -1,30 +1,59 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <RouterLink to="/"><a class="nav-link active" aria-current="page" href="">Calculator</a></RouterLink>
+                    </li>
+                    <li class="nav-item">
+                      <RouterLink to="/conversor"><a class="nav-link active" href="">Conversor</a></RouterLink>
+                    </li>
+                    <li class="nav-item">
+                      <RouterLink to="/weather"><a class=" nav-link active" href="">Weather</a></RouterLink>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+      
+<!-- 
       <nav>
         <RouterLink to="/">Calculator</RouterLink>
         <RouterLink to="/conversor">Conversor</RouterLink>
         <RouterLink to="/weather">Weather</RouterLink>
-      </nav>
-    </div>
+      </nav> -->
+    
   </header>
 
   <RouterView />
 </template>
 
 <style scoped>
+ .navbar {
+    background-color: #393E46 !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+    } 
+ a { text-decoration: none;}
 header {
   line-height: 1.5;
   max-height: 100vh;
+ 
 }
 
 .logo {

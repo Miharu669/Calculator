@@ -106,7 +106,11 @@ export default {
 </script>
 <style scoped>
 .container {
-  background-color: beige;
+  background-color: #393E46;
+  color: #EEEEEE;
+  top: 50%;
+  left: 50%;
+  translate: 0% 40%;
   /* Your container styles */
 }
 .row {
@@ -122,6 +126,7 @@ export default {
   height: auto;
 }
 .currency-input {
+  background-color: #B4B4B8;
   width: 100%;
   padding: 10px;
   margin-top: 10px;

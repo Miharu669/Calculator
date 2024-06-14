@@ -1,135 +1,161 @@
-<template>
-  <div id="app" class="container">
-    <div class="row main-container mx-auto">
-      <div class="row title-container no-gutters">
-        <div class="col-10">
-          <h1 class="title">Currency Converter</h1>
-        </div>
-        <div class="col-2">
-          <select class="select-country" @change="updateInputs" v-model="selected">
-            <option v-for="country in countries" :key="country.name">{{ country.name }}</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="row">
-        <!-- input field 1 -->
-        <div class="col">
-          <img class="country-flag" :src="imageSrc + 'flag-europe.png'" />
-          <h2 class="country-name">Europe</h2>
-          <p>Rate: 1 EUR</p>
-          <input
-            id="currencyInput"
-            class="currency-input"
-            @keyup="calcInput_1($event)"
-            v-model="calc2"
-          />
-        </div>
-        <!-- input field 2 -->
-        <div class="col">
-          <template v-for="country in countries" :key="country.name">
-            <template v-if="selected === country.name">
-              <img class="country-flag" :src="imageSrc + country.image" />
-              <h2 class="country-name">{{ country.name }}</h2>
-              <p class="">Rate: {{ country.rate }} EUR</p>
+<!-- <template>
+  <div>
+      <form
+          class="mx-auto w-full max-w-sm bg-white shadow rounded-md p-5 space-y-3 text-sm"
+          @submit.prevent="submit"
+      >
+          <div class="flex items-center justify-between space-x-5">
+              <label for="base_currency_input">Base currency:</label>
               <input
-                class="currency-input"
-                @keyup="calcInput_2"
-                v-model="calc1"
+                  v-model="params.base_currency"
+                  type="text"
+                  class="border-slate-300 border rounded-md py-2 px-4 text-sm"
               />
-              <span>{{ country.money }}</span>
-            </template>
-          </template>
-        </div>
+          </div>
+          <div class="flex items-center justify-between space-x-5">
+              <label for="currencies">Target currencies:</label>
+              <input
+                  v-model="params.currencies"
+                  type="text"
+                  class="border-slate-300 border rounded-md py-2 px-4 text-sm"
+              />
+          </div>
+          <button
+              type="submit"
+              class="bg-slate-800 text-white rounded-md py-2 px-4 mx-auto relative block"
+          >Get Latest Rates</button>
+      </form>
+      <div
+          v-if="results"
+          class="mx-auto my-5 w-full max-w-sm bg-white shadow rounded-md px-5 py-3 text-sm divide-y divide-dotted divide-slate-300"
+      >
+          <div
+              v-for="result of results"
+              :key="result.code"
+              class="flex items-center justify-between py-2"
+          >
+              <strong>{{ result.code }}</strong>
+              <span>{{ result.value }}</span>
+          </div>
       </div>
-    </div>
   </div>
 </template>
+
+<script>
+import CurrencyAPI from '@everapi/currencyapi-js';
+
+export default {
+    name: 'CurrencyConverter',
+    data () {
+        return {
+            params: {
+                base_currency: 'USD',
+                currencies: 'EUR,CAD'
+            },
+            results: null,
+            currencyApi: new CurrencyAPI('YOUR-API-KEY')
+        }
+    },
+    methods: {
+        submit () {
+            this.results = null;
+            this.currencyApi.latest(this.params).then(response => {
+                if (response.data) {
+                    this.results = response.data;
+                }
+            });
+        }
+    }
+}
+</script> -->
 <script>
 export default {
   data() {
     return {
-      selected: "USA",
-      countryRate: 1.07,
-      calc1: "",
-      calc2: "",
-      imageSrc: "",
-      countries: [
-        
-        
-        { name: "India", money: "INR", rate: 89.85, image: "flag-spain.png" },
-        { name: "USA", money: "USD", rate: 1.07, image: "flag-usa.png" },
-        { name: "Honduras", money: "HNL", rate: 26.58, image: "flag-new-zealand.png" },
-        { name: "Japanese", money: "YEN", rate: 169, image: "flag-japan.png" }
-      ]
+      amount: null,
+      fromCurrency: 'USD',
+      toCurrency: 'EUR',
+      currencies: ['USD', 'EUR', 'YEN', 'HNL'],
+      exchangeRates: {
+        USD: { USD: 1, EUR: 0.93, YEN: 157.56, HNL: 24.85 },
+        EUR: { USD: 1.07, EUR: 1, YEN: 168.61, HNL: 26.60 },
+        YEN: { USD: 0.0063, EUR: 0.0059, YEN: 1, HNL: 0.16 },
+        HNL: { USD: 0.040, EUR: 0.038, YEN: 6.34, HNL: 1 }
+      },
+      result: null
     };
   },
   methods: {
-    calcInput_1(e) {
-      this.firstInputSelected = true;
-      this.calculate(e);
-    },
-    calcInput_2(e) {
-      this.firstInputSelected = false;
-      this.calculate(e);
-    },
-    updateInputs() {
-      const selectedCountry = this.countries.find(country => country.name === this.selected);
-      if (selectedCountry) {
-        this.countryRate = selectedCountry.rate;
-      }
-      const input2 = parseFloat(document.getElementById("currencyInput").value);
-      if (isNaN(input2)) {
-        this.calc2 = "";
-        this.calc1 = "";
-        return;
-      }
-      this.calc1 = (input2 * this.countryRate).toFixed(2);
-    },
-    calculate(e) {
-      const value = parseFloat(e.target.value);
-      if (isNaN(value)) {
-        this.calc2 = "";
-        this.calc1 = "";
-        return;
-      }
-      if (this.firstInputSelected) {
-        this.calc2 = value;
-        this.calc1 = (value * this.countryRate).toFixed(2);
-      } else {
-        this.calc1 = value;
-        this.calc2 = (value / this.countryRate).toFixed(2);
+    convert() {
+      if (this.amount && this.fromCurrency && this.toCurrency) {
+        const rate = this.exchangeRates[this.fromCurrency][this.toCurrency];
+        this.result = (this.amount * rate).toFixed(2);
       }
     }
   }
 };
 </script>
+<template>
+  <div id="app">
+    <div class="converter">
+      <h1>Currency Converter</h1>
+      <div class="input-section">
+        <input type="number" v-model="amount" placeholder="Enter amount" />
+        <select v-model="fromCurrency">
+          <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+        </select>
+      </div>
+      <div class="output-section">
+        <select v-model="toCurrency">
+          <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+        </select>
+        <button @click="convert">Convert</button>
+      </div>
+      <div class="result" v-if="result !== null">
+        <p>{{ amount }} {{ fromCurrency }} = {{ result }} {{ toCurrency }}</p>
+      </div>
+    </div>
+  </div>
+</template>
 <style scoped>
-.container {
-  background-color: #393E46;
-  color: #EEEEEE;
-  top: 50%;
-  left: 50%;
-  translate: 0% 40%;
-  /* Your container styles */
+.converter {
+  width: 400px;
+  padding: 20px;
+  margin: 100px auto;
+  background: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
-.row {
-  gap:10px
-  /* Your row styles */
+
+h1 {
+  margin-bottom: 20px;
 }
-.title-container {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  /* Your title container styles */
+
+.input-section, .output-section {
+  margin-bottom: 20px;
 }
-.country-flag {
-  width: 50px;
-  height: auto;
-}
-.currency-input {
-  background-color: #B4B4B8;
-  width: 100%;
+
+input, select, button {
   padding: 10px;
-  margin-top: 10px;
+  margin: 5px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+.result {
+  font-size: 1.2em;
+  margin-top: 20px;
 }
 </style>
-

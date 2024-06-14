@@ -98,7 +98,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @font-face {
   font-family: "digital";
   src: local("digital"),

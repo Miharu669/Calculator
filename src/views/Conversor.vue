@@ -122,7 +122,7 @@ export default {
   width: 400px;
   padding: 20px;
   margin: 100px auto;
-  background: #f5f5f5;
+  background: #b4b4b8;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
@@ -145,13 +145,14 @@ input, select, button {
 }
 
 button {
-  background: #4CAF50;
+  background: #ffd369;
   color: white;
   cursor: pointer;
 }
 
 button:hover {
-  background: #45a049;
+  background: white;
+  color: black;
 }
 
 .result {

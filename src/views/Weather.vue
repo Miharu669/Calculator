@@ -38,13 +38,19 @@ export default {
     },
     setWeatherImage(description) {
       switch (description.toLowerCase()) {
-        case 'muy nuboso con lluvia':
+        case 'despejado':
           this.weatherImage = '/src/assets/img/clima.png';
           break;
-        case 'nublado':
+        case 'poco nuboso':
           this.weatherImage = '/src/assets/img/clima.png';
           break;
-        case 'lluvia':
+        case 'nubes altas':
+          this.weatherImage = '/src/assets/img/clima.png';
+          break;
+          case 'intervalos nubosos con lluvia escasa':
+          this.weatherImage = '/src/assets/img/clima.png';
+          break;
+          case 'muy nuboso con lluvia':
           this.weatherImage = '/src/assets/img/clima.png';
           break;
         // Añade más casos según sea necesario

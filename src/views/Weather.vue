@@ -1,45 +1,74 @@
-<template>
-  <div id="app"> // root
-    <div class="nav"> // navbar
-      <router-link to="/" class="nav__link">Home</router-link>
-      <router-link to="/about" class="nav__link">About</router-link>
+
+ <template>
+  <div>
+    <h1>Weather in Oviedo</h1>
+    <div v-if="weather">
+      <img :src="weatherImage" :alt="weather.stateSky.description" />
+      <p>Sky State: {{ weather.stateSky.description }}</p>
+      <p>Temperature: {{ weather.temperatura_actual }}°C</p>
     </div>
-    <router-view /> // router views will be rendered here
+    <div v-else>
+      <p>Loading...</p>
+    </div>
   </div>
 </template>
 
-<style lang="scss"> // some styles 🖍️
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400&display=swap&subset=cyrillic');
+<script>
+export default {
+  data() {
+    return {
+      weather: null,
+      weatherImage: '',
+    };
+  },
+  async created() {
+    await this.fetchWeather();
+  },
+  methods: {
+    async fetchWeather() {
+      try {
+        const response = await fetch('https://www.el-tiempo.net/api/json/v2/home');
+        const data = await response.json();
+        const oviedoWeather = data.ciudades.find(city => city.name === 'Oviedo');
+        this.weather = oviedoWeather;
+        this.setWeatherImage(oviedoWeather.stateSky.description);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    },
+    setWeatherImage(description) {
+      switch (description.toLowerCase()) {
+        case 'muy nuboso con lluvia':
+          this.weatherImage = '/src/assets/img/clima.png';
+          break;
+        case 'nublado':
+          this.weatherImage = '/src/assets/img/clima.png';
+          break;
+        case 'lluvia':
+          this.weatherImage = '/src/assets/img/clima.png';
+          break;
+        // Añade más casos según sea necesario
+        default:
+          this.weatherImage = '/src/assets/img/clima.png'; // Imagen por defecto
+      }
+    },
+  },
+};
+</script>
 
-  body {
-    font-family: 'Montserrat', sans-serif;
-    max-height: 100vh;
-  }
+<style scoped>
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
 
-  a {
-    color: #153B50;
-    text-decoration-color: rgba($color: #153B50, $alpha: 0.5);
-    transition: all 0.3s ease;
+p {
+  font-size: 1.2em;
+}
 
-    &:hover {
-      text-decoration-color: #153B50;
-    }
-  }
-
-  .nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-
-  .nav__link {
-    &:not(:last-child) {
-      margin-right: 15px;
-    }
-  }
+img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
 </style>

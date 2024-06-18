@@ -101,6 +101,7 @@ nav a:first-of-type {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
+
   }
 
   nav {
@@ -110,6 +111,15 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+  .nav-item{
+    font-size: 20px;
+  }
+  
+}
+@media only screen and (max-width: 500px) {
+  .nav-item{
+    font-size: 25px;
   }
 }
 </style>

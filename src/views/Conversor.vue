@@ -29,7 +29,7 @@ export default {
 <template>
   <div id="app">
     <div class="converter">
-      <h1>Currency Converter</h1>
+      <h1>Converter</h1>
       <div class="input-section">
         <input type="number" v-model="amount" placeholder="Enter amount" />
         <select v-model="fromCurrency">
@@ -57,6 +57,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   text-align: center;
+  margin-top:10%;
 }
 
 h1 {
@@ -89,5 +90,11 @@ button:hover {
 .result {
   font-size: 1.2em;
   margin-top: 20px;
+}
+@media only screen and (max-width: 500px) {
+  .converter {
+  margin-top:55%;
+  width: 90%;
+}
 }
 </style>

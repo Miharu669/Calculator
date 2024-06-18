@@ -1,3 +1,66 @@
+<script setup>
+import { ref } from 'vue';
+
+let equation = ref('0');
+let resultCalled = ref(false);
+let lastResult = ref(0);
+
+const useNumber = (num) => {
+  equation.value = resultCalled.value ? `${num}` : equation.value.search(/^0/g) ? `${equation.value}` + `${num}` : (equation.value.search(/^[-]$/g) !== -1 ? `${equation.value}` + `${num}` : `${num}`);
+  resultCalled.value = false;
+};
+
+const plusOperator = ' + ';
+const plus = () => {
+  equation.value = `${checkOperator(equation.value, plusOperator)}`;
+}
+
+const minusOperator = ' - ';
+const minus = () => {
+  equation.value = `${checkOperator(equation.value, minusOperator)}`;
+}
+
+const multiplyOperator = ' x ';
+const multiply = () => {
+  equation.value = `${checkOperator(equation.value, multiplyOperator)}`;
+}
+
+const divideOperator = ' / ';
+const divide = () => {
+  equation.value = `${checkOperator(equation.value, divideOperator)}`;
+}
+
+const clear = () => { equation.value = '0' }
+
+const checkOperator = (equation, requestedOperator) => {
+  if(equation.search(/^0$/g) !== -1){
+    if(requestedOperator.search(/( [/x] )$/g) !== -1) return '0';
+    else return requestedOperator.replace(/ /g, '')
+  }else{
+    if(resultCalled.value){
+      resultCalled.value = false;
+      return lastResult.value + requestedOperator;
+    }else{
+      return `${equation.replace(/( [+\-/x] )$/g, '')}${requestedOperator}`;
+    }
+  }
+}
+
+const result = () => {
+  let finalEqn = equation.value.replace(/( [+\-/x] )$/g, '')
+  resultCalled.value = finalEqn.search(/( [+\-/x] )/g) !== -1
+  let eqResult = Function('"use strict";return (' + finalEqn.replace(/( \x+ )/g, ' * ') + ')')();
+  equation.value = `${eqResult.toLocaleString()}`;
+  lastResult.value = eqResult;
+}
+
+const addDecimal = () => {
+  // Evitar múltiples puntos decimales en el mismo número
+  if (!equation.value.includes('.') || /[\+\-x\/] \d*$/.test(equation.value)) {
+    equation.value += '.';
+  }
+}
+</script>
 <template>
   <div class="calc">
     <div class="display">
@@ -93,69 +156,11 @@
 ::selection {
   background: none;
 }
-
+@media only screen and (max-width: 500px) {
+  .calc {
+  margin-top:5%;
+  width: 90%;
+}
+}
 
 </style>
-<script setup>
-import { ref } from 'vue';
-
-let equation = ref('0');
-let resultCalled = ref(false);
-let lastResult = ref(0);
-
-const useNumber = (num) => {
-  equation.value = resultCalled.value ? `${num}` : equation.value.search(/^0/g) ? `${equation.value}` + `${num}` : (equation.value.search(/^[-]$/g) !== -1 ? `${equation.value}` + `${num}` : `${num}`);
-  resultCalled.value = false;
-};
-
-const plusOperator = ' + ';
-const plus = () => {
-  equation.value = `${checkOperator(equation.value, plusOperator)}`;
-}
-
-const minusOperator = ' - ';
-const minus = () => {
-  equation.value = `${checkOperator(equation.value, minusOperator)}`;
-}
-
-const multiplyOperator = ' x ';
-const multiply = () => {
-  equation.value = `${checkOperator(equation.value, multiplyOperator)}`;
-}
-
-const divideOperator = ' / ';
-const divide = () => {
-  equation.value = `${checkOperator(equation.value, divideOperator)}`;
-}
-
-const clear = () => { equation.value = '0' }
-
-const checkOperator = (equation, requestedOperator) => {
-  if(equation.search(/^0$/g) !== -1){
-    if(requestedOperator.search(/( [/x] )$/g) !== -1) return '0';
-    else return requestedOperator.replace(/ /g, '')
-  }else{
-    if(resultCalled.value){
-      resultCalled.value = false;
-      return lastResult.value + requestedOperator;
-    }else{
-      return `${equation.replace(/( [+\-/x] )$/g, '')}${requestedOperator}`;
-    }
-  }
-}
-
-const result = () => {
-  let finalEqn = equation.value.replace(/( [+\-/x] )$/g, '')
-  resultCalled.value = finalEqn.search(/( [+\-/x] )/g) !== -1
-  let eqResult = Function('"use strict";return (' + finalEqn.replace(/( \x+ )/g, ' * ') + ')')();
-  equation.value = `${eqResult.toLocaleString()}`;
-  lastResult.value = eqResult;
-}
-
-const addDecimal = () => {
-  // Evitar múltiples puntos decimales en el mismo número
-  if (!equation.value.includes('.') || /[\+\-x\/] \d*$/.test(equation.value)) {
-    equation.value += '.';
-  }
-}
-</script>

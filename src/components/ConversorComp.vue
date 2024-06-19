@@ -53,9 +53,15 @@ const convert = () => {
   width: 400px;
   padding: 20px;
   margin: 100px auto;
-  background: #b4b4b8;
+  /* background: #b4b4b8;
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   text-align: center;
   margin-top:10%;
 }

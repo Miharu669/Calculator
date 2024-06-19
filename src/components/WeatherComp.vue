@@ -70,12 +70,18 @@ onMounted(async () => {
   font-family: 'Arial', sans-serif;
   text-align: center;
   padding: 20px;
-  background: linear-gradient(to bottom, #393e46 0%, #00f2fe 100%);
   color: #fff;
+  /* background: linear-gradient(to bottom, #393e46 0%, #00f2fe 100%);
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   max-width: 400px;
   margin: 0 auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-top:10%;
 }
 

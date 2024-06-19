@@ -103,8 +103,14 @@ const addDecimal = () => {
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: #222831;
-  border: 2px solid #222831;
+  // background-color: #222831;
+  // border: 2px solid #222831;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2.3px);
+  -webkit-backdrop-filter: blur(2.3px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   top: 50%;
   left: 50%;
   translate: 0% 40%;

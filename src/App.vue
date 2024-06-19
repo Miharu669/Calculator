@@ -27,16 +27,7 @@ import { RouterLink, RouterView } from 'vue-router'
             </div>
         </div>
     </nav>
-    
-      
-<!-- 
-      <nav>
-        <RouterLink to="/">Calculator</RouterLink>
-        <RouterLink to="/conversor">Conversor</RouterLink>
-        <RouterLink to="/weather">Weather</RouterLink>
-      </nav> -->
-    
-  </header>
+    </header>
   
 
   <RouterView />
@@ -44,6 +35,10 @@ import { RouterLink, RouterView } from 'vue-router'
 </template>
 
 <style scoped>
+
+.RouterView {
+  background-color: rgba (156, 146, 146, 0.04);
+}
 
  .navbar {
     background-color: #393E46 !important;

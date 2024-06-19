@@ -55,12 +55,13 @@ const result = () => {
 }
 
 const addDecimal = () => {
-  // Evitar múltiples puntos decimales en el mismo número
+
   if (!equation.value.includes('.') || /[\+\-x\/] \d*$/.test(equation.value)) {
     equation.value += '.';
   }
 }
 </script>
+
 <template>
   <div class="calc">
     <div class="display">
@@ -80,13 +81,14 @@ const addDecimal = () => {
 
       <div class="key special" @click="clear()">AC</div>
       <div class="key num" @click="useNumber(0)">0</div>
-      <div class="key num" @click="addDecimal()">.</div> <!-- Nuevo botón para el punto decimal -->
+      <div class="key num" @click="addDecimal()">.</div> 
       <div class="key fn" @click="divide()">/</div>
-      <div class="key fn" @click="result()">=</div>
+      <div class="key fn equals" @click="result()">=</div>
 
     </div>
   </div>
 </template>
+
 <style lang="scss">
 
 @font-face {
@@ -96,7 +98,7 @@ const addDecimal = () => {
 }
 .calc {
   width: 320px;
-  height: 480px;
+  height: auto;
   display: flex;
   flex-direction: column;
   margin-left: auto;
@@ -107,6 +109,7 @@ const addDecimal = () => {
   left: 50%;
   translate: 0% 40%;
   border-radius: 5px;
+  padding-bottom:10px;
 }
 
 .display {
@@ -145,6 +148,7 @@ const addDecimal = () => {
   background-color: #b4b4b8;
   color: #000000;
   border-radius: 3px;
+  
 }
 .special {
   background-color: #ffd369;
@@ -153,9 +157,16 @@ const addDecimal = () => {
   font-weight: bold;
   border-radius: 3px;
 }
+.equals {
+  grid-column: span 4;
+  background-color: #b4b4b8;
+  color: #000000;
+  border-radius: 3px;
+}
 ::selection {
   background: none;
 }
+
 @media only screen and (max-width: 500px) {
   .calc {
   margin-top:5%;

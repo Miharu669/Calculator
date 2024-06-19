@@ -1,52 +1,47 @@
-<script>
+<script setup>
+import { ref, onMounted } from 'vue';
 
-export default {
-  data() {
-    return {
-      weather: null,
-      weatherImage: '',
-    };
-  },
-  async created() {
-    await this.fetchWeather();
-  },
-  methods: {
-    async fetchWeather() {
-      try {
-        const response = await fetch('https://www.el-tiempo.net/api/json/v2/home');
-        const data = await response.json();
-        const oviedoWeather = data.ciudades.find(city => city.name === 'Oviedo');
-        this.weather = oviedoWeather;
-        this.setWeatherImage(oviedoWeather.stateSky.description);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    },
-    setWeatherImage(description) {
-      switch (description.toLowerCase()) {
-        case 'despejado':
-          this.weatherImage = '/src/assets/img/sol.png';
-          break;
-        case 'poco nuboso':
-          this.weatherImage = '/src/assets/img/dia-nublado.png';
-          break;
-        case 'nubes altas':
-          this.weatherImage = '/src/assets/img/nubes.png';
-          break;
-        case 'intervalos nubosos con lluvia escasa':
-          this.weatherImage = '/src/assets/img/clima.png';
-          break;
-        case 'muy nuboso con lluvia':
-        case 'cubierto con lluvia':
-          this.weatherImage = '/src/assets/img/lluvia.png';
-          break;
-        default:
-          this.weatherImage = '/src/assets/img/clima.png'; // Imagen por defecto
-      }
-    },
-  },
+const weather = ref(null);
+const weatherImage = ref('');
+
+const fetchWeather = async () => {
+  try {
+    const response = await fetch('https://www.el-tiempo.net/api/json/v2/home');
+    const data = await response.json();
+    const oviedoWeather = data.ciudades.find(city => city.name === 'Oviedo');
+    weather.value = oviedoWeather;
+    setWeatherImage(oviedoWeather.stateSky.description);
+  } catch (error) {
+    console.error('Error fetching weather data:', error);
+  }
 };
 
+const setWeatherImage = (description) => {
+  switch (description.toLowerCase()) {
+    case 'despejado':
+      weatherImage.value = '/src/assets/img/sol.png';
+      break;
+    case 'poco nuboso':
+      weatherImage.value = '/src/assets/img/dia-nublado.png';
+      break;
+    case 'nubes altas':
+      weatherImage.value = '/src/assets/img/nubes.png';
+      break;
+    case 'intervalos nubosos con lluvia escasa':
+      weatherImage.value = '/src/assets/img/clima.png';
+      break;
+    case 'muy nuboso con lluvia':
+    case 'cubierto con lluvia':
+      weatherImage.value = '/src/assets/img/lluvia.png';
+      break;
+    default:
+      weatherImage.value = '/src/assets/img/clima.png'; 
+  }
+};
+
+onMounted(async () => {
+  await fetchWeather();
+});
 </script>
 
 <template>

@@ -1,32 +1,30 @@
 
-<script>
-export default {
-  data() {
-    return {
-      amount: null,
-      fromCurrency: 'USD',
-      toCurrency: 'EUR',
-      currencies: ['USD', 'EUR', 'YEN', 'HNL'],
-      exchangeRates: {
-        USD: { USD: 1, EUR: 0.93, YEN: 157.56, HNL: 24.85 },
-        EUR: { USD: 1.07, EUR: 1, YEN: 168.61, HNL: 26.60 },
-        YEN: { USD: 0.0063, EUR: 0.0059, YEN: 1, HNL: 0.16 },
-        HNL: { USD: 0.040, EUR: 0.038, YEN: 6.34, HNL: 1 }
-      },
-      result: null
-    };
-  },
-  methods: {
-    convert() {
-      if (this.amount && this.fromCurrency && this.toCurrency) {
-        const rate = this.exchangeRates[this.fromCurrency][this.toCurrency];
-        this.result = (this.amount * rate).toFixed(2);
-      }
-    }
+<script setup>
+import { ref, reactive } from 'vue';
+
+const amount = ref(null);
+const fromCurrency = ref('USD');
+const toCurrency = ref('EUR');
+const currencies = ['USD', 'EUR', 'YEN', 'HNL'];
+
+const exchangeRates = reactive({
+  USD: { USD: 1, EUR: 0.93, YEN: 157.56, HNL: 24.85 },
+  EUR: { USD: 1.07, EUR: 1, YEN: 168.61, HNL: 26.60 },
+  YEN: { USD: 0.0063, EUR: 0.0059, YEN: 1, HNL: 0.16 },
+  HNL: { USD: 0.040, EUR: 0.038, YEN: 6.34, HNL: 1 }
+});
+
+const result = ref(null);
+
+const convert = () => {
+  if (amount.value && fromCurrency.value && toCurrency.value) {
+    const rate = exchangeRates[fromCurrency.value][toCurrency.value];
+    result.value = (amount.value * rate).toFixed(2);
   }
 };
 </script>
 <template>
+
   <div id="app">
     <div class="converter">
       <h1>Converter</h1>
@@ -47,8 +45,10 @@ export default {
       </div>
     </div>
   </div>
+
 </template>
 <style scoped>
+
 .converter {
   width: 400px;
   padding: 20px;
@@ -62,6 +62,8 @@ export default {
 
 h1 {
   margin-bottom: 20px;
+  color:white;
+  text-shadow: 0 0 5px #222831;
 }
 
 .input-section, .output-section {
@@ -78,7 +80,7 @@ input, select, button {
 
 button {
   background: #ffd369;
-  color: white;
+  color: #222831;
   cursor: pointer;
 }
 
@@ -88,8 +90,12 @@ button:hover {
 }
 
 .result {
-  font-size: 1.2em;
+  font-size: 1.5em;
   margin-top: 20px;
+  color:white;
+  text-shadow: 0 0 5px #00ccf0;
+  
+
 }
 @media only screen and (max-width: 500px) {
   .converter {

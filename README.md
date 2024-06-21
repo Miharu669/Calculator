@@ -17,6 +17,11 @@
 
 ![6f4a266bd1c9b7ba0c3c726acd3e4aac](https://github.com/Miharu669/Calculator/assets/168824422/cc3fbfea-53d3-44a5-aae4-010e1460dd3f)
 
+# Code
+
+![2df48e3a5df5ad8e560f2b7b4120bd9e](https://github.com/Miharu669/Calculator/assets/168824422/e1bd7b1f-ddbd-40fc-baba-ff1256b77280)
+
+
 ## Proyect done by <a href="https://github.com/Oscarss15"> Oscar </a> and <a href="https://github.com/Miharu669"> me </a>
 
 ## Stack:

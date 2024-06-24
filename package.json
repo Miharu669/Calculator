@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build-ghpages": "vite build --base=/CALCULATOR",
     "preview": "vite preview"
   },
   "dependencies": {

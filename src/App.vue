@@ -28,7 +28,7 @@ import { RouterLink, RouterView } from 'vue-router'
         </div>
     </nav>
     </header>
-  
+ 
 
   <RouterView />
 
@@ -39,7 +39,9 @@ import { RouterLink, RouterView } from 'vue-router'
 .RouterView {
   background-color: rgba (156, 146, 146, 0.04);
 }
-
+html {
+  height: 100%;
+}
  .navbar {
     background-color: #393E46 !important;
     position: fixed;

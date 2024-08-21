@@ -29,3 +29,5 @@ Vue, Sass, JavaScript, HTML and Bootstrap
 
 ## Api:
 <a href="https://www.el-tiempo.net/api"> El-tiempo.net </a>
+<br>
+<a href="vue-calculatorr.netlify.app">deploy </a>
